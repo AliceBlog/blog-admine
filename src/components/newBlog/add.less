@@ -1,0 +1,38 @@
+:local(.root){
+
+.ant-modal-content{
+overflow: auto;
+
+}
+.context{
+  height: 500px;
+  overflow: auto;
+}
+    .mdBox{
+    height:500px;
+    .MDEditor_toolbar{
+      display: none;
+    }
+    .editor,.preview{
+      width: 49%;
+      height:100%;
+      float: left;
+      overflow-x: hidden;
+    }
+    .MDEditor,.MDEditor_editor{
+      height:e('calc(100%)');
+      .CodeMirror{
+        height:100%;
+      }
+    }
+    .preview{
+      height: 100%;
+      border:1px solid #ccc;
+      // margin-top: 50px;
+    }
+    }
+    .ant-transfer-list{
+      width:45%;
+    }
+
+}

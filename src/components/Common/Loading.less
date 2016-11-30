@@ -1,0 +1,29 @@
+:local(.root){
+    width:e('calc(100% - 224px)');
+    height:100%;
+    position:fixed;
+    top:0;
+    right:0;
+    z-index:20000;
+    background:rgba(0,0,0,0.7);
+    -webkit-backdrop-filter:blur(2px);
+    backdrop-filter:blur(2px);
+
+    .ant-spin{
+        z-index:20001;
+        left:e('calc(50% - 112px)');
+        top:50%;
+        position:relative!important;
+        transform:translate(-50%,-50%);
+        -webkit-transform:translate(-50%,-50%);
+        -moz-transform:translate(-50%,-50%);
+
+        .ant-spin-dot{
+            position:relative;
+            left:50%;
+            transform:translateX(-50%);
+            -webkit-transform:translateX(-50%);
+            -moz-transform:translateX(-50%);
+        }
+    }
+}
