@@ -2,13 +2,16 @@ import React from 'react'
 import {connect} from 'react-redux'
 import DocumentTitle from 'react-document-title'
 import {push} from 'redux-router'
-import {Icon,message,Button,Input,Transfer,Modal } from 'antd';
+import {Icon,message,Button,Input,Transfer,Modal,Tabs} from 'antd';
+
 import "react-md-editor/less/component.less";
 import  "codemirror/lib/codemirror.css";
 var Editor = require('react-md-editor');
 var marked = require('marked');
 import styles from "./add.less";
+import MyEditor from "./MyEditor"
 // const SubMenu = Menu.SubMenu;
+const TabPane = Tabs.TabPane;
 Editor = require('react-md-editor');
 
 class MyComponent extends React.Component {
@@ -89,12 +92,21 @@ render={item => item.title}
 />
           </div>
           <h2>正文</h2>
-          <div className="mdBox">
+          <Tabs defaultActiveKey="1">
+    <TabPane tab={<span><Icon type="apple" />富文本编辑器</span>} key="1">
+      <MyEditor></MyEditor>
+    </TabPane>
+    <TabPane tab={<span><Icon type="android" />MarkDown编辑器</span>} key="2">
+     <div className="mdBox">
                   <div className="editor">
                     <Editor value={this.state.code} onChange={this.updateCode.bind(this)} />
                   </div>
                   <div className="preview" dangerouslySetInnerHTML={{__html: preview}} />
                 </div>
+    </TabPane>
+  </Tabs>
+          
+          
 </div>
           </Modal>
 
