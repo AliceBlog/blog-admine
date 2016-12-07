@@ -58,7 +58,7 @@ const ManageContainer = React.createClass({
         if(this.props.user.get('token')){
       return (
 
-        <DocumentTitle title="ManageContainer">
+        <DocumentTitle title="AliceのBlog">
             <div className={collapse ? "ant-layout-aside ant-layout-aside-collapse" : "ant-layout-aside"}>
             <Navigation menuDate={this.props.menuDate}
              onCollapseChange={this.onCollapseChange}
