@@ -25,7 +25,7 @@ export function login(username, password) {
             },
             headers: {
                 "Content-Type": "application/json",
-                "X-Tuso-Device-Token": config.deviceToken,
+                "Authentication-Token": config.AuthenticationToken,
             },
         })
     }
@@ -50,12 +50,10 @@ export function restoreFromToken(token, id) {
         callAPI: () => axios({
             method: 'post',
             url: config.api.user.get,
-            data: {
-                usr_ids: [parseInt(id)]
-            },
+            data: [id],
             headers: {
-                "X-Tuso-Device-Token": config.deviceToken,
-                "X-Tuso-Authentication-Token": token,
+                "Content-Type": "application/json",
+                "Authentication-Token": config.AuthenticationToken,
             },
         })
     }

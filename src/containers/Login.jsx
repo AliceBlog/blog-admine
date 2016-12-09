@@ -22,8 +22,8 @@ class MyComponent extends React.Component {
     constructor(props) {
         super(props)
         this.state={
-          userNameValue:'',
-          passwordValue:""
+          userNameValue:'Jermine',
+          passwordValue:"123456"
 
         }
 

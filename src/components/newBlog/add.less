@@ -1,5 +1,14 @@
 :local(.root){
-
+  textarea{
+    resize: none;
+  }
+h2{
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+.title{
+  margin-top: 0;
+}
 .ant-modal-content{
 overflow: auto;
 
@@ -37,5 +46,36 @@ height: 300px;
     .ant-transfer-list{
       width:45%;
     }
-
+.tagBox{
+  width: 80%;
+  height: 300px;
+  border-radius: 10px;
+  border:1px solid #ccc;
+  position: absolute;
+  left: 10%;
+  background-color: #fff;
+  z-index: 10;
+  padding: 10px;
+  h2{
+    color:#108ee9;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    margin-top: 0;
+  }
+  .ant-input-search-wrapper{
+    width: 60%;
+  }
+  .tagLibrary{
+    margin-top: 10px;
+    height: 70%;
+    overflow: auto;
+    .newTag{
+      width: 150px;
+      display: inline-block;
+      position: relative;
+      top: 8px;
+      margin: 0 5px 0 0;
+    }
+  }
+}
 }

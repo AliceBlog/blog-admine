@@ -55,7 +55,7 @@ const ManageContainer = React.createClass({
 	},
 	render: function() {
 		 const collapse = this.state.collapse;
-        if(this.props.user.get('token')){
+        if(this.props.user.get('loginState')==1){
       return (
 
         <DocumentTitle title="AliceのBlog">
@@ -89,16 +89,9 @@ function mapStateToProps(state) {
 					"icon": "caret-right",
 					"childrenMenu": [{
 						"id": 2,
-            "name": "Alice博客",
+            "name": "文章管理",
             "icon": "home",
-            "link": "aliceBlog"
-
-					},{
-						"id": 3,
-            "name": "Jermine博客",
-            "icon": "home",
-            "link": "jermineBlog"
-
+            "link": "blog"
 					}]
 
 				}]

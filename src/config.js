@@ -1,7 +1,10 @@
 // App config the for development environment.
 
 // const serverURL = 'http://ngs-children.oss-cn-shanghai.aliyuncs.com'
-const serverURL = (process.env.NODE_ENV === "production") ? 'https://api.tusoapp.com/' : 'https://api.dev.tusoapp.com/'
+const vdo = "http://api.vdo.pub";
+const witdor = 'http://witdor.com';
+const blog = "http://b.daoapp.io";
+const serverURL = (process.env.NODE_ENV === "production") ? blog : blog
 
 const version = "v1/"
 const serviceHera = "hera/"
@@ -9,8 +12,8 @@ const config = {
     debug: (process.env.NODE_ENV === "production") ? false : true,
     api: {
         user: {
-            login: `${serverURL+serviceHera+version}account/login`,
-            get: `${serverURL+serviceHera+version}account/user_by_ids`,
+            login: `${serverURL}/mgr/v1/account/login`,
+            get: `${serverURL}/mgr/v1/users/view`,
             getUser: `${serverURL+serviceHera+version}account/user`,
         },
         natures: {
@@ -23,7 +26,7 @@ const config = {
     },
     deviceToken: "1",
     serverURL,
-    AuthenticationToken: "y49bBHx4nOw7m6WWidjM28aGALfbEoo0",
+    AuthenticationToken: "q1rVBSFOnz5JCdB9",
     hue: ['R', 'VR', 'V', 'BV', 'B', 'GB', 'YG', 'G', 'Y', 'YR', 'BK', 'E'],
     filterType: {
         acuity: {
