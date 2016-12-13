@@ -137,6 +137,21 @@ class MyComponent extends React.Component {
     this.handleDelete(deleteArray)
     
   }
+  changeState(id,resule){
+    let data=[{
+id:id,
+article_status:resule=="ArticleStatusNULL"||resule=="ArticleStatusUnpublished"?"ArticleStatusPublished":"ArticleStatusUnpublished"
+    }]
+  changeArticle(data).then((data) => {
+      if (data) {
+        message.success('修改成功');
+        this.props.getBlogList("pageCount:" + 10)
+        this.setState({visible: false})
+      } else {
+        message.error('修改失败');
+      }
+    })
+  }
   render() {
     const columns = [{
       title: '标题',
@@ -144,6 +159,11 @@ class MyComponent extends React.Component {
     }, {
       title: '简介',
       dataIndex: 'description',
+       width:200,
+       render: (text, record) => {
+        
+        return (<div className="description">{text}</div>)
+      }
     }, {
       title: '正文',
       width:200,
@@ -168,7 +188,11 @@ class MyComponent extends React.Component {
       }
     }, {
       title: '状态',
-      dataIndex: 'status',
+      dataIndex: 'article_status',
+      render: (text, record) => {
+       
+        return (<span>{text=="ArticleStatusNULL"||text=="ArticleStatusUnpublished"?"未发布":"发布"}</span>)
+      }
     }, {
       title: '操作',
       key: 'action',
@@ -178,7 +202,7 @@ class MyComponent extends React.Component {
           <span className="ant-divider" />
           <a href="#" onClick={this.handleDelete.bind(this,[record.id])}>删除</a>
           <span className="ant-divider" />
-          <a href="#">（取消）发布</a>
+          <a href="#" onClick={this.changeState.bind(this,record.id,record.article_status)}>{record.article_status=="ArticleStatusNULL"||record.article_status=="ArticleStatusUnpublished"?"发布":"撤回"}</a>
           <span className="ant-divider" />
           <a href="#">预览</a>
 

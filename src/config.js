@@ -26,7 +26,7 @@ const config = {
     },
     deviceToken: "1",
     serverURL,
-    AuthenticationToken: "q1rVBSFOnz5JCdB9",
+    AuthenticationToken: localStorage.getItem('token'),
     hue: ['R', 'VR', 'V', 'BV', 'B', 'GB', 'YG', 'G', 'Y', 'YR', 'BK', 'E'],
     filterType: {
         acuity: {
