@@ -88,6 +88,26 @@ export function getTagList() {
             })
     }
 }
+//根据id查询正文
+export function articlesView(data) {
+    return new Promise((resolve, rej) => {
+        axios({
+                method: 'post',
+                url: config.serverURL + '/mgr/v1/articles/view',
+                data: data,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authentication-Token": config.AuthenticationToken,
+                },
+            })
+            .then((res) => {
+                if (res.status == 200) {
+                    resolve(res.data.data)
+                }
+            })
+    })
+
+}
 
 //添加标签
 export function addTags(data) {

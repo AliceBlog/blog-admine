@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DocumentTitle from 'react-document-title'
 import { push } from 'redux-router'
-import { Breadcrumb, Icon, message, Button, Input, Table, Modal } from 'antd'
+import { Breadcrumb, Icon, message, Button, Input, Table, Modal ,Tag} from 'antd'
 import styles from './Blog.less'
 import _ from 'underscore'
 import { bindActionCreators } from 'redux'
@@ -165,12 +165,18 @@ article_status:resule=="ArticleStatusNULL"||resule=="ArticleStatusUnpublished"?"
         return (<div className="description">{text}</div>)
       }
     }, {
-      title: '正文',
+      title: '标签',
       width:200,
-      dataIndex: 'content',
+      dataIndex: 'tags',
       render: (text, record) => {
         
-        return (<div className="content">{text}</div>)
+        return (
+          
+          <div className="content">{text.map(tag =>
+                <Tag key={tag.id}>
+                  {tag.name}
+                </Tag>
+              ) }</div>)
       }
     }, {
       title: '发布时间',

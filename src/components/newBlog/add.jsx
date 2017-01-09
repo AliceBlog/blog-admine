@@ -5,42 +5,22 @@ import { push } from 'redux-router'
 import { Icon, message, Button, Input, Transfer, Modal, Tabs, Tag } from 'antd';
 import "react-md-editor/less/component.less";
 import "codemirror/lib/codemirror.css";
+// import {  ReactMarkdown  } from 'react-markdown';
+var Markdown = require('react-markdown');
 var Editor = require('react-md-editor');
-var marked = require('marked');
-import styles from "./add.less";
-import MyEditor from "./MyEditor"
+import styles from "./add.less"
+require ("react-markdown/demo/dist/css/demo.css")
 // const SubMenu = Menu.SubMenu;
 const TabPane = Tabs.TabPane;
 const Search = Input.Search;
-Editor = require('react-md-editor');
-var markdownString = '```js\n console.log("hello"); \n```';
-// marked.setOptions({
-//   highlight: function (code, lang, callback) {
-//     require('pygmentize-bundled')({ lang: lang, format: 'html' }, code, function (err, result) {
-//       callback(err, result.toString());
-//     });
-//   }
-// });
-
-// Using async version of marked 
-marked(markdownString, function (err, content) {
-  if (err) throw err;
-  console.log(content);
-});
-
-// Synchronous highlighting with highlight.js 
-marked.setOptions({
-  highlight: function (code) {
-    return require('highlight.js').highlightAuto(code).value;
-  }
-});
+import { articlesView} from '../../actions/blog'
 // let index = 3;
 class MyComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       visible: true,
-      tags: [],
+      tags:this.props.blog ? this.props.blog.tags : [],
       tagsList: [],
       tagBox: {},
       tagLibrary: false,
@@ -58,12 +38,24 @@ class MyComponent extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if ((nextProps.blog && this.props.blog && this.props.blog.id != nextProps.blog.id) || !this.props.blog && nextProps.blog) {
-      this.setState({
+    //  articlesView
+    this.setState({
+        tags:nextProps.blog ? nextProps.blog.tags : [],
         titleValue: nextProps.blog ? nextProps.blog.title : "",
         descValue: nextProps.blog ? nextProps.blog.description : "",
         keywords: nextProps.blog ? nextProps.blog.key_words : "",
-        code: nextProps.blog ? nextProps.blog.content : "# 博客正文",
+        
       })
+      let articleId=[nextProps.blog.id]
+      
+      articlesView(articleId).then((data) => {
+      if (data.length>0) {
+       this.setState({code: data[0].content})
+      } else {
+        message.error('文章详情查询失败');
+      }
+    })
+      
     }else if(this.state.init){
       this.setState({
         titleValue:  "",
@@ -71,12 +63,13 @@ class MyComponent extends React.Component {
         keywords:"",
         code: "# 博客正文",
       })
-    }
-    this.setState({
+    }else{
+       this.setState({
       tagsList: nextProps.tagsList ? nextProps.tagsList : [],
       init:true
-
     })
+    }
+   
   }
   showModal() {
     this.setState({
@@ -163,9 +156,14 @@ class MyComponent extends React.Component {
     this.setState({ addInputValue: e.target.value })
   }
   addArticleTad(tag) {
-    let tagsTemp = this.state.tags;
+    if(this.state.tagsTemp.length<5){
+ let tagsTemp = this.state.tags;
     tagsTemp.push(tag)
     this.setState({ tagsTemp })
+    }else{
+      message.error("最多只能选择五个标签")
+    }
+   
   }
   handleArticleClose(tagId) {
     let tagsTemp = this.state.tags;
@@ -185,7 +183,7 @@ class MyComponent extends React.Component {
   }
   render() {
     // console.log(this.props.user.getIn(["nickname"]));
-    var preview = marked(this.state.code);
+    // var preview = marked(this.state.code);
     return (
 
       <Modal className={`${styles.root}`} title="编辑博客" visible={this.props.visible}
@@ -215,15 +213,16 @@ class MyComponent extends React.Component {
           </div>
           <h2>正文</h2>
           <Tabs defaultActiveKey="1">
-            <TabPane tab={<span><Icon type="apple" />富文本编辑器</span>} key="1">
-              <MyEditor></MyEditor>
-            </TabPane>
-            <TabPane tab={<span><Icon type="android" />MarkDown编辑器</span>} key="2">
+           
+            <TabPane tab={<span><Icon type="android" />MarkDown编辑器</span>} key="1">
               <div className="mdBox">
                 <div className="editor">
                   <Editor value={this.state.code} onChange={this.updateCode.bind(this)} />
                 </div>
-                <div className="preview" dangerouslySetInnerHTML={{ __html: preview }} />
+            
+              <div className="preview">
+              <Markdown source={this.state.code} />
+              </div>
               </div>
             </TabPane>
           </Tabs>

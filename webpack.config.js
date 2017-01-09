@@ -22,36 +22,41 @@ module.exports = {
     ],
     module: {
         loaders: [{
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015']
-        }, {
-            test: /\.css$/,
-            loaders: ["style", "css"]
-        }, {
-            test: /\.less$/,
-            loaders: ["style", "css", 'less']
-        }, {
-            test: /\.(ttf|eot|woff(2)?)(\?(t=)?[a-z0-9]+)?$/,
-            loader: 'url?limit=50000&hash=sha512&digest=hex&name=[hash].[ext]'
-        }, {
-            test: /\.(svg?)(\?(t=)?[a-z0-9]+)$/,
-            loader: 'url?limit=50000&hash=sha512&digest=hex&name=[hash].[ext]'
-        }, {
-            test: /\.svg$/,
-            loader: 'svg-inline'
-        }, {
-            test: /\.(jpe?g|png|gif)$/i,
-            loaders: [
-                'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
-            ]
-        }, {
-            test: /\.mp3$/,
-            loaders: [
-                'file?hash=sha512&digest=hex&name=[hash].[ext]',
-            ]
-        }]
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015']
+            }, {
+                test: /\.css$/,
+                loaders: ["style", "css"]
+            }, {
+                test: /\.less$/,
+                loaders: ["style", "css", 'less']
+            }, {
+                test: /\.(ttf|eot|woff(2)?)(\?(t=)?[a-z0-9]+)?$/,
+                loader: 'url?limit=50000&hash=sha512&digest=hex&name=[hash].[ext]'
+            }, {
+                test: /\.(svg?)(\?(t=)?[a-z0-9]+)$/,
+                loader: 'url?limit=50000&hash=sha512&digest=hex&name=[hash].[ext]'
+            }, {
+                test: /\.svg$/,
+                loader: 'svg-inline'
+            }, {
+                test: /\.(jpe?g|png|gif)$/i,
+                loaders: [
+                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
+                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
+                ]
+            },
+            {
+                test: /\.json$/,
+                loader: 'json'
+            }, {
+                test: /\.mp3$/,
+                loaders: [
+                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
+                ]
+            }
+        ]
     },
     resolve: {
         extensions: ['', '.js', '.jsx']
