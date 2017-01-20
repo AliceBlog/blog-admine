@@ -50,6 +50,8 @@
     "history": "^2.0.0",
     "image-webpack-loader": "^1.8.0",
     "jquery": "^3.1.1",
+    "json": "^9.0.4",
+    "json-loader": "^0.5.4",
     "less-loader": "^2.2.3",
     "marked": "^0.3.6",
     "md.editor": "^1.2.1",

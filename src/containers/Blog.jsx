@@ -2,13 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DocumentTitle from 'react-document-title'
 import { push } from 'redux-router'
-import { Breadcrumb, Icon, message, Button, Input, Table, Modal ,Tag} from 'antd'
+import { Breadcrumb, Icon, message, Button, Input, Table, Modal, Tag } from 'antd'
 import styles from './Blog.less'
 import _ from 'underscore'
 import { bindActionCreators } from 'redux'
 import { toJS } from 'immutable'
 import moment from 'moment'
-import { getBlogList, getTagList, addTags, deleteTags, addArticle,deleteArticle,changeArticle } from '../actions/blog'
+import { getBlogList, getTagList, addTags, deleteTags, addArticle, deleteArticle, changeArticle } from '../actions/blog'
 import LocalizedModal from '../components/newBlog/add'
 import Loading from '../components/Common/Loading'
 
@@ -96,57 +96,57 @@ class MyComponent extends React.Component {
       if (data) {
         message.success('新增成功');
         this.props.getBlogList("pageCount:" + 10)
-        this.setState({visible: false})
+        this.setState({ visible: false })
       } else {
         message.error('新增失败');
       }
     })
   }
-  handleChangeArticle(data){
+  handleChangeArticle(data) {
     changeArticle(data).then((data) => {
       if (data) {
         message.success('修改成功');
         this.props.getBlogList("pageCount:" + 10)
-        this.setState({visible: false})
+        this.setState({ visible: false })
       } else {
         message.error('修改失败');
       }
     })
   }
-  handleDelete(data){
-  deleteArticle(data).then((data) => {
+  handleDelete(data) {
+    deleteArticle(data).then((data) => {
       if (data) {
         message.success('删除成功');
         this.props.getBlogList("pageCount:" + 10)
-        this.setState({visible: false})
+        this.setState({ visible: false })
       } else {
         message.error('删除失败');
       }
     })
   }
-  deleteArticleList(){
-    let deleteArray=[];
-    this.state.blogList.map((item,i)=>{
-      this.state.selectedRowKeys.map((select,index)=>{
-        if(select==i){
-         deleteArray.push(item.id)
+  deleteArticleList() {
+    let deleteArray = [];
+    this.state.blogList.map((item, i) => {
+      this.state.selectedRowKeys.map((select, index) => {
+        if (select == i) {
+          deleteArray.push(item.id)
         }
       })
     })
-    this.setState({selectedRowKeys:[]})
+    this.setState({ selectedRowKeys: [] })
     this.handleDelete(deleteArray)
-    
+
   }
-  changeState(id,resule){
-    let data=[{
-id:id,
-article_status:resule=="ArticleStatusNULL"||resule=="ArticleStatusUnpublished"?"ArticleStatusPublished":"ArticleStatusUnpublished"
+  changeState(id, resule) {
+    let data = [{
+      id: id,
+      article_status: resule == "ArticleStatusNULL" || resule == "ArticleStatusUnpublished" ? "ArticleStatusPublished" : "ArticleStatusUnpublished"
     }]
-  changeArticle(data).then((data) => {
+    changeArticle(data).then((data) => {
       if (data) {
         message.success('修改成功');
         this.props.getBlogList("pageCount:" + 10)
-        this.setState({visible: false})
+        this.setState({ visible: false })
       } else {
         message.error('修改失败');
       }
@@ -156,31 +156,32 @@ article_status:resule=="ArticleStatusNULL"||resule=="ArticleStatusUnpublished"?"
     const columns = [{
       title: '标题',
       dataIndex: 'title',
+      key: 'title'
     }, {
       title: '简介',
       dataIndex: 'description',
-       width:200,
-       render: (text, record) => {
-        
+      key: 'description',
+      width: 200,
+      render: (text, record) => {
         return (<div className="description">{text}</div>)
       }
     }, {
       title: '标签',
-      width:200,
+      width: 200,
       dataIndex: 'tags',
+      key: 'tags',
       render: (text, record) => {
-        
         return (
-          
           <div className="content">{text.map(tag =>
-                <Tag key={tag.id}>
-                  {tag.name}
-                </Tag>
-              ) }</div>)
+            <Tag key={tag.id}>
+              {tag.name}
+            </Tag>
+          )}</div>)
       }
     }, {
       title: '发布时间',
       dataIndex: 'created_at',
+      key: 'created_at',
       render: (text, record) => {
         let newDate = new Date(text)
         return (<span>{moment(newDate).format('YYYY-MM-DD HH:mm:ss')}</span>)
@@ -188,6 +189,7 @@ article_status:resule=="ArticleStatusNULL"||resule=="ArticleStatusUnpublished"?"
     }, {
       title: '最后修改时间',
       dataIndex: 'updated_at',
+      key: 'updated_at',
       render: (text, record) => {
         let newDate = new Date(text)
         return (<span>{moment(newDate).format('YYYY-MM-DD HH:mm:ss')}</span>)
@@ -195,9 +197,10 @@ article_status:resule=="ArticleStatusNULL"||resule=="ArticleStatusUnpublished"?"
     }, {
       title: '状态',
       dataIndex: 'article_status',
+      key: 'article_status',
       render: (text, record) => {
-       
-        return (<span>{text=="ArticleStatusNULL"||text=="ArticleStatusUnpublished"?"未发布":"发布"}</span>)
+
+        return (<span>{text == "ArticleStatusNULL" || text == "ArticleStatusUnpublished" ? "未发布" : "发布"}</span>)
       }
     }, {
       title: '操作',
@@ -206,9 +209,9 @@ article_status:resule=="ArticleStatusNULL"||resule=="ArticleStatusUnpublished"?"
         <span>
           <a href="#" onClick={this.handleEdit.bind(this, record)}>编辑</a>
           <span className="ant-divider" />
-          <a href="#" onClick={this.handleDelete.bind(this,[record.id])}>删除</a>
+          <a href="#" onClick={this.handleDelete.bind(this, [record.id])}>删除</a>
           <span className="ant-divider" />
-          <a href="#" onClick={this.changeState.bind(this,record.id,record.article_status)}>{record.article_status=="ArticleStatusNULL"||record.article_status=="ArticleStatusUnpublished"?"发布":"撤回"}</a>
+          <a href="#" onClick={this.changeState.bind(this, record.id, record.article_status)}>{record.article_status == "ArticleStatusNULL" || record.article_status == "ArticleStatusUnpublished" ? "发布" : "撤回"}</a>
           <span className="ant-divider" />
           <a href="#">预览</a>
 
@@ -235,7 +238,7 @@ article_status:resule=="ArticleStatusNULL"||resule=="ArticleStatusUnpublished"?"
               <Button type="primary" onClick={this.deleteArticleList.bind(this)}
                 disabled={!hasSelected} loading={loading}
                 >批量删除</Button>
-              <Button type="primary" onClick={this.handleEdit.bind(this,undefined)}>新增</Button>
+              <Button type="primary" onClick={this.handleEdit.bind(this, undefined)}>新增</Button>
             </div>
             <span style={{ marginLeft: 8 }}>{hasSelected ? `已选择 ${selectedRowKeys.length} 条文章` : ''}</span>
 

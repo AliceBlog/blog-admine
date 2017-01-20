@@ -30,7 +30,8 @@ class MyComponent extends React.Component {
       descValue: this.props.blog ? this.props.blog.description : "",
       keywords: this.props.blog ? this.props.key_words : "",
       code: "# 博客正文",
-      init:true
+      init:true,
+      tagsTemp:[]
     }
   }
   componentDidMount() {
@@ -156,18 +157,37 @@ class MyComponent extends React.Component {
     this.setState({ addInputValue: e.target.value })
   }
   addArticleTad(tag) {
+    console.log(this.state.tagsTemp)
     if(this.state.tagsTemp.length<5){
  let tagsTemp = this.state.tags;
+ let has=false;
+    
+    tagsTemp.map((item,i)=>{
+      if(tag.id==item.id){
+        has=true
+      }
+    })
+    if(!has){
     tagsTemp.push(tag)
     this.setState({ tagsTemp })
     }else{
-      message.error("最多只能选择五个标签")
+message.error(tag.name+"已存在")
+    }
+    
+    }else{
+      
     }
    
   }
   handleArticleClose(tagId) {
     let tagsTemp = this.state.tags;
     tagsTemp.filter(tag => (tag.id !== tagId) && tag);
+
+    tagsTemp.map((item,i)=>{
+      if(item.id==tagId){
+     tagsTemp.splice(i,1)
+      }
+    })
     this.setState({
       tagsTemp
     })
