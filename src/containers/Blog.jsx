@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DocumentTitle from 'react-document-title'
 import { push } from 'redux-router'
-import { Breadcrumb, Icon, message, Button, Input, Table, Modal, Tag } from 'antd'
+import { Breadcrumb, Icon, message, Button, Input, Table, Modal, Tag, Pagination } from 'antd'
 import styles from './Blog.less'
 import _ from 'underscore'
 import { bindActionCreators } from 'redux'
@@ -23,7 +23,10 @@ class MyComponent extends React.Component {
       loadStatus: false,//加载状态
       visible: false,
       tagList: [],
-      blog: undefined
+      blog: undefined,
+      total: 0,
+      current: 1,
+      pageSize: 10
     }
   }
   start() {
@@ -37,15 +40,18 @@ class MyComponent extends React.Component {
     }, 1000);
   }
   onSelectChange(selectedRowKeys) {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
     this.setState({ selectedRowKeys });
   }
   componentDidMount() {
-    this.props.getBlogList("pageCount:" + 10);
+    this.props.getBlogList("pageCount:" + this.state.pageSize, "currentN:" + this.state.current);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ loadStatus: false, blogList: nextProps.blogList.list, tagList: nextProps.tagList.list })
+    let  blogList=nextProps.blogList.list;
+    blogList.map((item,i)=>{
+      item.key=i
+    })
+    this.setState({ loadStatus: false, total: nextProps.blogList.count, blogList: blogList, tagList: nextProps.tagList.list })
   }
   handleCancel() {
     this.setState({
@@ -152,11 +158,19 @@ class MyComponent extends React.Component {
       }
     })
   }
+  onShowSizeChange(current, pageSize) {
+    this.setState({ pageSize: pageSize, current: 1 })
+    this.props.getBlogList("pageCount:" + pageSize, "currentN:" + 1);
+  }
+  handlePageChange(pageNumber) {
+    this.setState({ current: pageNumber })
+    this.props.getBlogList("pageCount:" + this.state.pageSize, "currentN:" + pageNumber);
+  }
   render() {
     const columns = [{
       title: '标题',
       dataIndex: 'title',
-      key: 'title'
+      key: 'id'
     }, {
       title: '简介',
       dataIndex: 'description',
@@ -227,6 +241,7 @@ class MyComponent extends React.Component {
     return (
       <div className={`ant-layout-container ${styles.root}`}>
         <div className="ant-layout-content">
+
           <div className="tableBox">
             <div className="topBtn">
               <Button type="primary" onClick={this.start.bind(this)}
@@ -242,10 +257,11 @@ class MyComponent extends React.Component {
             </div>
             <span style={{ marginLeft: 8 }}>{hasSelected ? `已选择 ${selectedRowKeys.length} 条文章` : ''}</span>
 
-            <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.blogList} />
+            <Table rowSelection={rowSelection} pagination={false} columns={columns} dataSource={this.state.blogList} />
           </div>
-
-
+          <div className="pageBox">
+            <Pagination current={this.state.current} pageSize={this.state.pageSize} onChange={this.handlePageChange.bind(this)} total={this.state.total} showSizeChanger onShowSizeChange={this.onShowSizeChange.bind(this)} showQuickJumper />
+          </div>
           {
                 /*<Loading loadStatus={this.state.loadStatus}></Loading>*/}
         </div>

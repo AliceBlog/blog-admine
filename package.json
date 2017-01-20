@@ -40,7 +40,7 @@
     "file-loader": "^0.8.5"
   },
   "dependencies": {
-    "antd": "^2.0.0",
+    "antd": "^2.6.3",
     "axios": "0.15.2",
     "babel-polyfill": "^6.3.14",
     "child_process": "^1.0.2",
